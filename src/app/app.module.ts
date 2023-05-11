@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AddProduitComponent } from './components/add-produit/add-produit.component';
 import { FormsModule } from '@angular/forms';
 import { UpdateProduitComponent } from './components/update-produit/update-produit.component';
-
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -15,12 +15,14 @@ import { UpdateProduitComponent } from './components/update-produit/update-produ
     AppComponent,
     ProduitsComponent,
     AddProduitComponent,
-    UpdateProduitComponent
+    UpdateProduitComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

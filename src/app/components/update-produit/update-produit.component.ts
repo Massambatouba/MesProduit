@@ -22,7 +22,7 @@ constructor(private produitService: ProduitService,
 
 
   ngOnInit(): void {
-    this.categories = this.produitService.listeCategorie()
+    // this.categories = this.produitService.listeCategorie()
     const id = this.activateRoute.snapshot.params["id"]
     //console.log(id);
     this.currentProduit = this.produitService.consulterProduit(id)
@@ -31,7 +31,7 @@ constructor(private produitService: ProduitService,
 
   }
   updateProduit(){
-    this.currentProduit.categorie = this.produitService.consulterCategorie(this.updatedCatId)
+    // this.currentProduit.categorie = this.produitService.consulterCategorie(this.updatedCatId)
     this.produitService.updateProduit(this.currentProduit)
     this.router.navigateByUrl("/produits")
   }

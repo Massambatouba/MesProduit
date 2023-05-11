@@ -15,7 +15,9 @@ export class ProduitsComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.produits = this.produitService.listeProduit()
+    this.produitService.getListeProduit().subscribe(
+      produitsListe =>this.produits = produitsListe
+    )
   }
   supprimerProduit(produit: Produit){
     let conf = confirm("Etes vous sur de vouloir supprimer ce produit ?")
