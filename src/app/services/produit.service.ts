@@ -7,8 +7,8 @@ import { Categorie } from '../model/categorie.model';
 })
 export class ProduitService {
 
-  produits: Produit[];
-  categories: Categorie[];
+  produits!: Produit[];
+  categories!: Categorie[];
 
   constructor() {
     this.categories = [
@@ -53,5 +53,11 @@ export class ProduitService {
       }
       return 0;
     });
+  }
+  listeCategorie():Categorie[]{
+    return this.categories;
+  }
+  consulterCategorie(id: number): Categorie{
+    return this.categories.find(cat => cat.idCat == id)!
   }
 }
