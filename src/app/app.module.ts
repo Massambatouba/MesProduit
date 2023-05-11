@@ -6,6 +6,7 @@ import { ProduitsComponent } from './components/produits/produits.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AddProduitComponent } from './components/add-produit/add-produit.component';
 import { FormsModule } from '@angular/forms';
+import { UpdateProduitComponent } from './components/update-produit/update-produit.component';
 
 
 
@@ -13,7 +14,8 @@ import { FormsModule } from '@angular/forms';
   declarations: [
     AppComponent,
     ProduitsComponent,
-    AddProduitComponent
+    AddProduitComponent,
+    UpdateProduitComponent
   ],
   imports: [
     BrowserModule,
