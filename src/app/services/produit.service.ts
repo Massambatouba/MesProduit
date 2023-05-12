@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Produit } from '../model/produit.model';
 import { Categorie } from '../model/categorie.model';
 import { Observable, catchError, of, tap } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,8 @@ export class ProduitService {
 
   produits!: Produit[];
   categories!: Categorie[];
+  apiURL: string = "http://localhost:8080/produits/api"
+
 
   constructor(private http: HttpClient) {
     // this.categories = [
@@ -32,28 +34,42 @@ export class ProduitService {
     return of(errorValue)
    }
    getListeProduit(): Observable<Produit[]> {
-    return this.http.get<Produit[]>("http://localhost:8080/produits/api").pipe(
+    return this.http.get<Produit[]>(this.apiURL).pipe(
       tap((response) =>this.log(response)),
       catchError((error) => this.handleError(error, [])
     )
    )}
-   addProduit(produit: Produit){
-      this.produits.push(produit);
+   addProduit(produit: Produit): Observable<null>{
+      const httpOptions = {
+        headers: new HttpHeaders({"content-type": 'application/json'})
+      };
+      return this.http.post(this.apiURL, produit, httpOptions).pipe(
+
+        tap((response) =>this.log(response)),
+        catchError((error) => this.handleError(error, [])
+      )
+
+      )
    }
-   supprimerProduit(produit: Produit){
-    const index = this.produits.indexOf(produit, 0);
-    if(index > -1){
-      this.produits.splice(index, 1)
-    }
+   supprimerProduit(produitId: number): Observable<null>{
+    return this.http.delete(`http://localhost:8080/produits/api/${produitId}`).pipe(
+      tap((response)=>this.log(response)),
+      catchError((error)=>this.handleError(error, null))
+    )
    }
-   consulterProduit(id: number): Produit{
-    return this.produits.find(p => p.idProduit == id)!;
+   consulterProduit(id: number): Observable<Produit> {
+    const url = `${this.apiURL}/${id}`
+    return this.http.get<Produit>(url)
 
   }
   updateProduit(produit: Produit){
-    this.supprimerProduit(produit);
-    this.addProduit(produit)
-    this.trierProduits()
+   const httpOptions = {
+    headers: new HttpHeaders({'content-type': 'application/json'})
+   };
+   return this.http.put(this.apiURL, produit, httpOptions).pipe(
+    tap((response)=> this.log(response)),
+    catchError((error)=> this.handleError(error, undefined))
+   )
   }
   trierProduits(){
     this.produits = this.produits.sort((n1, n2) =>{
