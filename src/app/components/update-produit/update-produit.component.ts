@@ -22,18 +22,24 @@ constructor(private produitService: ProduitService,
 
 
   ngOnInit(): void {
-    this.categories = this.produitService.listeCategorie()
+    // this.categories = this.produitService.listeCategorie()
     const id = this.activateRoute.snapshot.params["id"]
     //console.log(id);
-    this.currentProduit = this.produitService.consulterProduit(id)
+    this.produitService.consulterProduit(id).subscribe(
+      produit =>{ this.currentProduit = produit}
+    )
     //console.log(this.currentProduit);
-    this.updatedCatId = this.currentProduit.categorie.idCat
+    // this.updatedCatId = this.currentProduit.categorie.idCat
 
   }
   updateProduit(){
-    this.currentProduit.categorie = this.produitService.consulterCategorie(this.updatedCatId)
-    this.produitService.updateProduit(this.currentProduit)
-    this.router.navigateByUrl("/produits")
+    // this.currentProduit.categorie = this.produitService.consulterCategorie(this.updatedCatId)
+    this.produitService.updateProduit(this.currentProduit).subscribe(
+      produit => {
+          this.router.navigateByUrl("/produits")
+      }
+    )
+
   }
 
 }
